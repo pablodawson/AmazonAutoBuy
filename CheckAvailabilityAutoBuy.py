@@ -199,7 +199,17 @@ if __name__ == '__main__':
                     country = get_country(urls[i])
 
                     # It takes the price of the product from html page and then does the conversion.
-                    price = soup.select('#priceblock_ourprice')[0].get_text().strip()
+                    try:
+                        price=soup.select('#priceblock_saleprice')[0].get_text().strip()
+                    except:
+                        try:
+                            price = soup.select('#priceblock_ourprice')[0].get_text().strip()
+                        except:
+                            try:
+                                price =soup.select('#priceblock_dealprice')[0].get_text().strip()
+                            except:
+                                print('Price not found')
+
                     price = price_conversion(price)
 
                     # It checks that the price of the product is lower than the maximum established.
